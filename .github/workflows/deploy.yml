@@ -1,4 +1,4 @@
-name: Deploy Hello Demo
+name: CI CD Demo
 
 on:
   push:
@@ -6,7 +6,26 @@ on:
       - main
 
 jobs:
+
+  # ====================
+  # CI：代码检查
+  # ====================
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check Python syntax
+        run: python3 -m py_compile app.py
+
+
+  # ====================
+  # CD：自动部署
+  # ====================
   deploy:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
